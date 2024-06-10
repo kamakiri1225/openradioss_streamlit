@@ -45,15 +45,16 @@ def test_func():
                     ]
             }
         )
-        pd.options.display.precision = 2
-        st.dataframe(
-            df_prop,
-            column_config={
-                "setting": "setting",
-                # "url": st.column_config.LinkColumn("App URL")
-            },
-            # hide_index=True,
-        )
+        # pd.options.display.precision = 2
+        # st.dataframe(
+        #     df_prop,
+        #     column_config={
+        #         "setting": "setting",
+        #         # "url": st.column_config.LinkColumn("App URL")
+        #     },
+        #     # hide_index=True,
+        # )
+        df_prop = st.data_editor(df_prop)
         if prop_sel1 == "prop1": code_prop = proptemp.prpo_test(propid, df_prop)
         st.subheader("材料定義")
         # st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
@@ -74,15 +75,16 @@ def test_func():
                     ]
             }
         )
-        pd.options.display.precision = 2
-        st.dataframe(
-            df_mat,
-            column_config={
-                "setting": "setting",
-                # "url": st.column_config.LinkColumn("App URL")
-            },
-            # hide_index=True,
-        )
+        # pd.options.display.precision = 2
+        # st.dataframe(
+        #     df_mat,
+        #     column_config={
+        #         "setting": "setting",
+        #         # "url": st.column_config.LinkColumn("App URL")
+        #     },
+        #     # hide_index=True,
+        # )
+        df_mat = st.data_editor(df_mat)
         if mat_sel1 == "LAW1": code_mat = mattemp.Mat_test(matid, df_mat)
 
         st.subheader("パートの定義")
