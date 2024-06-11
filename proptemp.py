@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-def prpo_test(propid, df_prop):
+def prpo_test(prop_title, propid, df_prop):
     propid = str(propid)
     Ishell = str(int(df_prop.iloc[0,1]))
     Thick = str(df_prop.iloc[1,1])
@@ -9,7 +9,7 @@ def prpo_test(propid, df_prop):
         f"""\
 #---1----|----2----|----3----|----4----|----5----|----6----|----7----|----8----|----9----|---10----|#---1----|----2----|----3----|----4----|----5----|----6----|----7----|----8----|----9----|---10----|
 /PROP/SH_ORTH/{propid}
-FABRIC
+{prop_title}
 #   Ishell    Ismstr     Ish3n    Idrill                            P_thick_fail
 {Ishell.rjust(10)}        11         2         0                                       0
 #         ismstr=1 + refgeo = ismstr=11
