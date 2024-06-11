@@ -34,7 +34,7 @@ def test_func():
             # )
             df_prop = st.data_editor(df_prop)
             
-            code_prop = proptemp.prpo_test(prop_title, propid, df_prop)
+            code_prop = proptemp.prpo_SH_ORTH(prop_title, propid, df_prop)
         
         st.subheader("材料定義")
         # st.image("https://static.streamlit.io/examples/owl.jpg", width=200)

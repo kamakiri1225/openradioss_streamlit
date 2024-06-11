@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-def prpo_test(prop_title, propid, df_prop):
+def prpo_SH_ORTH(prop_title, propid, df_prop):
     propid = str(propid)
     Ishell = str(int(df_prop.iloc[0,1]))
     Thick = str(df_prop.iloc[1,1])
