@@ -1,13 +1,5 @@
 import streamlit as st
-import analytics, intro_end
-import pandas as pd
-
-
-# 文字列をファイルに書き出す
-def write_to_file(text, filename):
-    with open(filename, 'w') as file:
-        file.write(text)
-    file.close()
+import analytics, intro_end, output_file
 
 def main():
     st.header('OpenRadioss Setting GUI', divider='rainbow')
@@ -36,7 +28,6 @@ def main():
     if sel1 == "エアバッグ解析":
         pass
 
-
     st.markdown('---')
 
     st.title("設定ファイルの出力")
@@ -51,16 +42,7 @@ def main():
         pass
 
     # ファイル名
-    file_name = st.text_input("ファイル名（拡張子無）", "templete")
-    st.write(f"出力するファイル名：{file_name}0000.rad")
-
-    if st.button("ファイル出力",type="primary"):
-        # Streamlitアプリケーション
-        write_to_file(code, f"{file_name}000.rad")
-        st.write("ファイルを出力しました")
-    else:
-        st.write("ファイルの出力がまたです")
-    
+    output_file.output_file(code)
 
 if __name__=="__main__":
     main()
