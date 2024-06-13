@@ -23,24 +23,15 @@ def test_func():
                         ]
                 }
             )
-            # pd.options.display.precision = 2
-            # st.dataframe(
-            #     df_prop,
-            #     column_config={
-            #         "setting": "setting",
-            #         # "url": st.column_config.LinkColumn("App URL")
-            #     },
-            #     # hide_index=True,
-            # )
             df_prop = st.data_editor(df_prop)
             
             code_prop = proptemp.prpo_SH_ORTH(prop_title, propid, df_prop)
         
         st.subheader("材料定義")
         # st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
-        matid = st.number_input("MAT ID number", step=1, min_value = 1)
+        matid = [st.number_input("MAT ID number", step=1, min_value = 1)]
         mat_title = st.text_input("MAT Title", "templete")
-        mat1 = ["LAW1", "MAT_TAB", "LAW3"]
+        mat1 = ["LAW1", "/MAT/ELAST", "/MAT/PLAS_TAB"]
         mat_sel1 = st.selectbox('材料', mat1, index=0)
         
         if mat_sel1 == "LAW1": 
@@ -59,8 +50,32 @@ def test_func():
             )
             df_mat = st.data_editor(df_mat)
             code_mat = mattemp.Mat_test(mat_title, matid, df_mat)
+        if mat_sel1 == "/MAT/ELAST": 
+            st.markdown(
+                """
+                このキーワードは、フックの法則を使用して等方性の線形弾性材料を定義します。この材料則は応力とひずみの間の線形関係を表します。トラス、ビーム（タイプ3のみ）、シェルとソリッド要素に使用可能です。
+                """
+            )
+            pd.options.display.precision = 10
+            df_mat = pd.DataFrame(
+                {
+                    "setting": ["rho", "E", "Nu"],
+                    "value": [8.5e-7, 210000, 0.3],
+                    "explanation": [
+                        "説明あり",
+                        "説明あり",
+                        "説明あり",
+                        ]
+                }
+            ) 
+            df_mat = st.data_editor(df_mat)
 
-        if mat_sel1 == "MAT_TAB": 
+            HEAT_Flag = st.checkbox("Heat")
+
+            code_mat = mattemp.Mat_ELAST(mat_title, matid, df_mat, HEAT_Flag)
+            
+
+        if mat_sel1 == "/MAT/PLAS_TAB": 
             pd.options.display.precision = 10
             df_mat = pd.DataFrame(
                 {
@@ -75,7 +90,8 @@ def test_func():
             )            
             df_mat = st.data_editor(df_mat)
             code_mat = mattemp.Mat_PLAS_TAB(mat_title, matid, df_mat)
-        
+
+
         st.subheader("パートの定義")
         # st.image("https://static.streamlit.io/examples/cat.jpg", width=200)
         parttitle = st.text_input("パート名", "template")

@@ -27,6 +27,35 @@ def Mat_test(mat_title, matid, df_mat):
     
     return code
 
+def Mat_ELAST(mat_title, matid_list, df_mat, HEAT_Flag):
+    matid = str(matid_list[0])
+    rho = str(df_mat.iloc[0,1])
+    E = str(df_mat.iloc[1,1])
+    Nu = str(df_mat.iloc[2,1])
+    code = \
+        f"""\
+#---1----|----2----|----3----|----4----|----5----|----6----|----7----|----8----|----9----|---10----|
+/MAT/ELAST/{matid}
+{mat_title}                                                                                         
+#              RHO_I
+{rho.rjust(20)}
+#                  E                  nu
+{E.rjust(20)}{Nu.rjust(20)}
+"""
+    if HEAT_Flag:
+        code += \
+        f"""\
+/HEAT/MAT/{matid}
+#                 T0             RHO0_CP                  AS                  BS     IfORM
+                                                                                        
+#                 T1                  AL                  BL               EFRAC  
+"""
+
+    with st.expander("/MAT/ELAST"):
+        st.code(code)
+    
+    return code
+
 def Mat_PLAS_TAB(mat_title, matid, df_mat):
     matid = str(matid)
     rho = str(df_mat.iloc[0,1])
@@ -53,7 +82,7 @@ def Mat_PLAS_TAB(mat_title, matid, df_mat):
                    0 
 """
 
-    with st.expander("材料定義"):
+    with st.expander("/MAT/PLAS_TAB"):
         st.code(code)
     
     return code
