@@ -1,8 +1,8 @@
 import streamlit as st
-from stpyvista import stpyvista
+# from stpyvista import stpyvista
 import pyvista as pv
 import analytics, intro_end, output_file
-import stlReader
+# import stlReader
 def main():
 
     st.header("モデルの読み込み")
