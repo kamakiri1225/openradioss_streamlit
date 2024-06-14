@@ -6,7 +6,7 @@ import stlReader
 def main():
 
     st.header("モデルの読み込み")
-    stlReader.stlReader()
+    # stlReader.stlReader()
 
     st.header('OpenRadioss Setting GUI', divider='rainbow')
     st.title("解析の種類")
