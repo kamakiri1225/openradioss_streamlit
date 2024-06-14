@@ -1,7 +1,13 @@
 import streamlit as st
+from stpyvista import stpyvista
+import pyvista as pv
 import analytics, intro_end, output_file
-
+import stlReader
 def main():
+
+    st.header("モデルの読み込み")
+    stlReader.stlReader()
+
     st.header('OpenRadioss Setting GUI', divider='rainbow')
     st.title("解析の種類")
 
@@ -46,14 +52,9 @@ def main():
 
 if __name__=="__main__":
     st.set_page_config(
-            page_title="Ex-stream-ly Cool App",
-            page_icon="🧊",
-            layout="wide",
-            initial_sidebar_state="expanded",
-            menu_items={
-                'Get Help': 'https://www.extremelycoolapp.com/help',
-                'Report a bug': "https://www.extremelycoolapp.com/bug",
-                'About': "# This is a header. This is an *extremely* cool app!"
-            }
-        )
+        page_title="stpyvista",
+        page_icon="🧊",
+        layout="wide",
+        initial_sidebar_state="collapsed",
+    )
     main()
