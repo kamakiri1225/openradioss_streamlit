@@ -29,7 +29,7 @@ def test_func():
         
         st.subheader("材料定義")
         # st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
-        matid = [st.number_input("MAT ID number", step=1, min_value = 1)]
+        matid = st.number_input("MAT ID number", step=1, min_value = 1)
         mat_title = st.text_input("MAT Title", "templete")
         mat1 = ["LAW1", "/MAT/ELAST", "/MAT/PLAS_TAB"]
         mat_sel1 = st.selectbox('材料', mat1, index=0)
