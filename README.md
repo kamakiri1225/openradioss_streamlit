@@ -1,4 +1,4 @@
 # openradioss_streamlit
 openradioss_streamlit
 
-[OpenRadioss GUI](https://openradiossapp-rtfknyvuhkkgtygmmw4fdq.streamlit.app/)
+[OpenRadioss GUI](https://openradiossapp-kqbbn7kvnxjfyy7evjuzgn.streamlit.app/)
