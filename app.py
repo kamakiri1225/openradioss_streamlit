@@ -1,5 +1,5 @@
 import streamlit as st
-from stpyvista import stpyvista
+#from stpyvista import stpyvista
 import pyvista as pv
 import assets.analytics, assets.intro_end, assets.output_file
 import assets.stlReader
