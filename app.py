@@ -1,14 +1,15 @@
 import streamlit as st
 from stpyvista import stpyvista
 import pyvista as pv
-import analytics, intro_end, output_file
-import stlReader
+import assets.analytics, assets.intro_end, assets.output_file
+import assets.stlReader
+
 def main():
 
     st.header('OpenRadioss Setting GUI', divider='rainbow')
     
     st.title("モデルの読み込み")
-    stlReader.stlReader()
+    assets.stlReader.stlReader()
 
     st.title("解析の種類")
 
@@ -20,8 +21,8 @@ def main():
     st.title("解析の設定")
 
     if sel1 == "線形解析":
-        code_part, code_prop, code_mat = analytics.test_func()
-        code_bcs =  analytics.test_func1()
+        code_part, code_prop, code_mat = assets.analytics.test_func()
+        code_bcs =  assets.analytics.test_func1()
 
     if sel1 == "熱解析":
         pass
@@ -41,7 +42,7 @@ def main():
 
     title = st.text_input("解析タイトル", "templete")
 
-    intro, end = intro_end.intro_end(title)
+    intro, end = assets.intro_end.intro_end(title)
 
     try:
         code = intro + code_part + code_prop + code_mat + code_bcs + end
@@ -49,7 +50,7 @@ def main():
         pass
 
     # ファイル名
-    output_file.output_file(code)
+    assets.output_file.output_file(code)
 
 if __name__=="__main__":
     st.set_page_config(

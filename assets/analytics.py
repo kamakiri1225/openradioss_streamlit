@@ -1,17 +1,62 @@
 import pandas as pd
 import streamlit as st
-import parttemp, mattemp, proptemp, assets.BCS
+import assets.parttemp, assets.mattemp, assets.proptemp, assets.BCS
 
 def test_func():
     tab1, tab2, tab3 = st.tabs(["part1", "part2", "part3"])
+    
     with tab1:
         st.subheader("プロパティ")
         propid = st.number_input("PROP ID number", step=1, min_value = 1)
         prop_title = st.text_input("PROP Title", "templete")
-        prop1 = ["SH_ORTH", "prop2", "prop3"]
+        prop1 = ["TYPE1(SHELL)", "TYPE9(SH_ORTH)", "TYPE10(SH_COMP)", "BEAM"]
         prop_sel1 = st.selectbox('プロパティ', prop1, index=0)
 
-        if prop_sel1 == "SH_ORTH":
+        if prop_sel1 == "TYPE1(SHELL)":
+            st.markdown(
+                """
+                3節点または4節点のシェル要素で使用されるシェルプロパティセットを記述します。Belytschko、QBAT、またはQEPHのシェル定式化が利用可能です。
+                """
+            )
+            pd.options.display.precision = 10
+            df_prop= pd.DataFrame(
+                {
+                    "setting": ["Ishell", "Thick"],
+                    "value": [4, 0.33333],
+                    "explanation": [
+                    """\
+                    シェル要素の定式化フラグ
+                    = 0  
+                    /DEF_SHELLの値を使用  
+                    = 1  
+                    /DEF_SHELLが定義されていない場合のデフォルト  
+                    Q4、変形モードと剛体モードに直交する粘弾性アワグラスモード（Belytschko）  
+                    = 2  
+                    Q4、直交性を伴わない粘弾性アワグラス（Hallquist）  
+                    = 3  
+                    Q4、直交性を伴う弾塑性アワグラス  
+                    = 4  
+                    タイプ1の定式化を改良したQ4（ねじれた要素の直交化）。  
+                    = 12  
+                    QBATシェル定式化  
+                    = 24  
+                    QEPHシェル定式化。  
+                    （整数）
+                    """,
+                    "シェル厚",
+                    ]
+                }
+            )
+            df_prop = st.data_editor(df_prop)
+            
+            code_prop = assets.proptemp.prpo_SHELL(prop_title, propid, df_prop)
+
+        if prop_sel1 == "TYPE9(SH_ORTH)":
+            st.markdown(
+                """
+                このプロパティは、直交異方性シェルロパティの定義に使用されます。
+                """
+            )
             pd.options.display.precision = 10
             df_prop= pd.DataFrame(
                 {
@@ -24,9 +69,49 @@ def test_func():
                 }
             )
             df_prop = st.data_editor(df_prop)
+            code_prop = assets.proptemp.prpo_SH_ORTH(prop_title, propid, df_prop)
+
+        if prop_sel1 == "TYPE10(SH_COMP)":
+            st.markdown(
+                """
+                このプロパティセットは、複合シェルプロパティセットの定義に使用されます。それぞれが異なる直交異方性方向を持つ複数の層で複合材料を定義できます。
+                """
+            )
+            pd.options.display.precision = 10
+            df_prop= pd.DataFrame(
+                {
+                    "setting": ["Ishell", "Thick"],
+                    "value": [4, 0.33333],
+                    "explanation": [
+                        "説明あり",
+                        "説明あり",
+                        ]
+                }
+            )
+            df_prop = st.data_editor(df_prop)
+            code_prop = assets.proptemp.prpo_SH_COMP(prop_title, propid, df_prop)
+
+        if prop_sel1 == "BEAM":
+            st.markdown(
+                """
+                ねじり、曲げ、膜、または軸の各変形のビームプロパティを記述します。
+                """
+            )
+            pd.options.display.precision = 10
+            df_prop= pd.DataFrame(
+                {
+                    "setting": ["Ismstr", "Area"],
+                    "value": [0, 100],
+                    "explanation": [
+                        "説明あり",
+                        "説明あり",
+                        ]
+                }
+            )
+            df_prop = st.data_editor(df_prop)
             
-            code_prop = proptemp.prpo_SH_ORTH(prop_title, propid, df_prop)
-        
+            code_prop = assets.proptemp.prpo_BEAM(prop_title, propid, df_prop)
+
         st.subheader("材料定義")
         # st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
         matid = st.number_input("MAT ID number", step=1, min_value = 1)
@@ -49,7 +134,7 @@ def test_func():
                 }
             )
             df_mat = st.data_editor(df_mat)
-            code_mat = mattemp.Mat_test(mat_title, matid, df_mat)
+            code_mat = assets.mattemp.Mat_test(mat_title, matid, df_mat)
         if mat_sel1 == "/MAT/ELAST": 
             st.markdown(
                 """
@@ -72,7 +157,7 @@ def test_func():
 
             HEAT_Flag = st.checkbox("Heat")
 
-            code_mat = mattemp.Mat_ELAST(mat_title, matid, df_mat, HEAT_Flag)
+            code_mat = assets.mattemp.Mat_ELAST(mat_title, matid, df_mat, HEAT_Flag)
             
 
         if mat_sel1 == "/MAT/PLAS_TAB": 
@@ -89,7 +174,7 @@ def test_func():
                 }
             )            
             df_mat = st.data_editor(df_mat)
-            code_mat = mattemp.Mat_PLAS_TAB(mat_title, matid, df_mat)
+            code_mat = assets.mattemp.Mat_PLAS_TAB(mat_title, matid, df_mat)
 
 
         st.subheader("パートの定義")
@@ -97,7 +182,7 @@ def test_func():
         parttitle = st.text_input("パート名", "template")
         pid = st.number_input("PID number", step=1, min_value = 1)
                 
-        code_part = parttemp.Part_test(parttitle, pid, propid, matid)
+        code_part = assets.parttemp.Part_test(parttitle, pid, propid, matid)
 
     with tab2:
         pass
@@ -132,7 +217,7 @@ def test_func1():
 
             df_bcs = st.data_editor(df_bcs)
             
-            code_bcs = BCS.bcs(bcstitle, bcsid, df_bcs)
+            code_bcs = assets.BCS.bcs(bcstitle, bcsid, df_bcs)
  
     with tab2:
         pass
