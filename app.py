@@ -8,8 +8,8 @@ def main():
 
     st.header('OpenRadioss Setting GUI', divider='rainbow')
     
-    st.title("モデルの読み込み")
-    assets.stlReader.stlReader()
+    # st.title("モデルの読み込み")
+    # assets.stlReader.stlReader()
 
     st.title("解析の種類")
 
