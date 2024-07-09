@@ -1,5 +1,5 @@
 import streamlit as st
-from stpyvista import stpyvista
+#from stpyvista import stpyvista
 import pyvista as pv
 import assets.analytics, assets.intro_end, assets.output_file
 import assets.stlReader
@@ -8,8 +8,8 @@ def main():
 
     st.header('OpenRadioss Setting GUI', divider='rainbow')
     
-    st.title("モデルの読み込み")
-    assets.stlReader.stlReader()
+    # st.title("モデルの読み込み")
+    # assets.stlReader.stlReader()
 
     st.title("解析の種類")
 
